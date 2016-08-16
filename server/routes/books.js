@@ -31,17 +31,19 @@ router.post('/', function (req, res) {
       res.sendStatus(500);
     }
 
-    client.query('INSERT INTO books (author, title, published) '
-                + 'VALUES ($1, $2, $3)',
-                [book.author, book.title, book.published],
+    client.query('INSERT INTO books (author, title, published, edition, publisher) '
+                + 'VALUES ($1, $2, $3, $4 ,$5)',
+                [book.author, book.title, book.published, book.edition, book.publisher],
                 function (err, result) {
                   done();
 
                   if (err) {
+                    console.log(err);
                     res.sendStatus(500);
+                  }else {
+                    res.sendStatus(201);
                   }
-
-                  res.sendStatus(201);
+                  
                 });
   });
 });
